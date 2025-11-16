@@ -42,7 +42,7 @@ Create, edit, delete, copy, and save notes — all stored safely in your **local
 
 ```bash
 # Clone the repo
-git clone <your-repo-link>
+git clone https://github.com/satyansh2004/notes_app.git
 
 # Open folder
 cd notes-app
