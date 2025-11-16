@@ -36,8 +36,8 @@ function post() {
 
         input_text.value = "";
         tags_input.value = "";
-        close_add_notes();
     }
+    close_add_notes();
 }
 
 let postBtn = document.getElementById("add_btn_textarea");
