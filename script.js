@@ -126,14 +126,11 @@ deleteBtn.forEach((btn) => {
         let p_notes = JSON.parse(localStorage.getItem("notes")) || [];
         let p_tags = JSON.parse(localStorage.getItem("tags")) || [];
 
-        console.log(typeof p_notes)
-
         let notes = btn.closest(".card");
+        let notesText = notes.querySelector(".content").innerText.trim();
 
         for (let i = 0; i < p_notes.length; i++) {
-            if (p_notes[i] == notes.children[1].innerHTML) {
-                console.log("notes")
-
+            if ((p_notes[i] || "") == notesText) {
                 p_notes.splice(i, 1);
                 
                 p_tags.splice(i, 1);
@@ -141,10 +138,11 @@ deleteBtn.forEach((btn) => {
                 localStorage.setItem("tags", JSON.stringify(p_tags));
 
                 localStorage.setItem("notes", JSON.stringify(p_notes));
+
+                notes.remove();
+                break;
             }
         }
-        displayNotes()
-        console.log(notes)
     })
 })
 
