@@ -12,7 +12,6 @@ function adds_Notes() {
     }
 }
 
-
 let addNotes = document.getElementById("addNotes");
 addNotes.addEventListener("click", adds_Notes);
 
@@ -48,14 +47,14 @@ postBtn.addEventListener("click", () => {
 
 
 function displayNotes() {
-    let p_notes = JSON.parse(localStorage.getItem("notes"));
-    let p_tags = JSON.parse(localStorage.getItem("tags"));
+    let p_notes = JSON.parse(localStorage.getItem("notes")) || [];
+    let p_tags = JSON.parse(localStorage.getItem("tags")) || [];
 
     main_div.innerHTML = "";
     let html = "";
 
     for (let i = 0; i < p_notes.length; i++) {
-        let card = `<div class="flex flex-col h-[200px] bg-[#292929] row-span-1 break-all p-1 rounded-[4px]">
+        let card = `<div class="card flex flex-col h-[200px] bg-[#292929] row-span-1 break-all p-1 rounded-[4px] shadow-[0_2px_10px_rgba(0,0,0,0.25)]">
                 <div class="cardButtons w-full mb-1 justify-between flex fle-row py-2 px-3">
                     <span class="flex">
                         <button class="copy">
@@ -109,7 +108,45 @@ function close_add_notes() {
 let close_btn_add_notes = document.getElementById("close_btn_add_notes");
 close_btn_add_notes.addEventListener("click", close_add_notes);
 
+let copyBtn = document.querySelectorAll(".copy");
+copyBtn.forEach((btn) => {
+    btn.addEventListener("click", () => {
+        let parentCard = btn.closest(".card");
+        let text = parentCard.querySelector(".content").innerText;
 
+        navigator.clipboard.writeText(text)
+        alert(`Copied Successfully: ${text}`)
+    })
+});
+
+
+let deleteBtn = document.querySelectorAll(".delete");
+deleteBtn.forEach((btn) => {
+    btn.addEventListener("click", () => {
+        let p_notes = JSON.parse(localStorage.getItem("notes")) || [];
+        let p_tags = JSON.parse(localStorage.getItem("tags")) || [];
+
+        console.log(typeof p_notes)
+
+        let notes = btn.closest(".card");
+
+        for (let i = 0; i < p_notes.length; i++) {
+            if (p_notes[i] == notes.children[1].innerHTML) {
+                console.log("notes")
+
+                p_notes.splice(i, 1);
+                
+                p_tags.splice(i, 1);
+
+                localStorage.setItem("tags", JSON.stringify(p_tags));
+
+                localStorage.setItem("notes", JSON.stringify(p_notes));
+            }
+        }
+        displayNotes()
+        console.log(notes)
+    })
+})
 
 // For footer
 window.addEventListener("load", () => {
